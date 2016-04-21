@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="libs/core.jar"/>
+	<classpathentry kind="lib" path="libs/minim/jl1.0.jar"/>
+	<classpathentry kind="lib" path="libs/minim/jsminim.jar"/>
+	<classpathentry kind="lib" path="libs/minim/minim.jar"/>
+	<classpathentry kind="lib" path="libs/minim/mp3spi1.9.4.jar"/>
+	<classpathentry kind="lib" path="libs/minim/tritonus_aos.jar"/>
+	<classpathentry kind="lib" path="libs/minim/tritonus_share.jar"/>
+	<classpathentry kind="lib" path="libs/video/gstreamer-java.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Taller3/libs/video/windows64"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="libs/video/jna.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Taller3/libs/video/windows64"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="libs/video/video.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Taller3/libs/video/windows64"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
