@@ -19,9 +19,11 @@ public class Logica {
 	private Happy happy;
 	private PImage imagen;
 	private PImage imagenFiltrada;
-	private PImage imageFiltradaDos, imagenFiltradaTres;
+	private PImage imageFiltradaDos, imagenFiltradaTres, imagenFiltradaCuatro;
 	private PFont font;
 	private AnimalView animal;
+	private Metodo fisheye;
+	private AnimalFDos animalView;
 
 	public Logica(PApplet app) {
 		this.app = app;
@@ -29,12 +31,16 @@ public class Logica {
 		cam.start();
 		imagen = app.loadImage("../data/dbfa1978.jpg");
 		chroma = new Chroma(app);
+		//imagenFiltradaCuatro= app.createImage(1280,720, app.RGB);
 		for (int i = 0; i < 6; i++) {
 			imgs[i] = app.loadImage("../data/img-0" + i + ".png");
 		}
 		happy = new Happy(app);
 		font = app.createFont("../data/Roboto-Light.ttf", 20);
 		animal = new AnimalView(app);
+		animalView= new AnimalFDos(app);
+		
+	
 	}
 
 	public void display() {
@@ -45,13 +51,16 @@ public class Logica {
 		if (cam.available() == true) {
 			cam.read();
 		}
+		chroma.filtro();
 		imagenFiltrada = chroma.filtro(cam.get(), imgs[1]);
 		imageFiltradaDos = happy.filtro(imagenFiltrada.get());
-        imagenFiltradaTres = animal.filtro(imagenFiltrada.get());
-		
+		imagenFiltradaTres = animal.filtro(imagenFiltrada.get());
+//int [] a=Metodo.fisheye(imagenFiltrada.get().pixels, 1280, 720);
 		app.fill(255);
 		app.textSize(14);
-
+		//imagenFiltradaCuatro.pixels=a;
+		//imagenFiltradaCuatro.updatePixels();
+		//app.image(imagenFiltradaCuatro,0,0);
 	}
 
 	public void estados() {
@@ -64,21 +73,21 @@ public class Logica {
 			break;
 		case 1:
 			// filtro de chroma libres
-			//app.image(imgs[1], 0, 0);
+			// app.image(imgs[1], 0, 0);
 			// filtro aqui
 			app.image(imageFiltradaDos.get(), 0, 0);
-			chroma.filtro();
+			
 			break;
 		case 2:
 			// flitro de chroma encerrados
-			app.image(imagenFiltradaTres, 0, 0);
-			chroma.filtro();
+			//app.image(imagenFiltradaTres, 0, 0);
+			app.image(imgs[2], 0, 0);
 			// filtro aqui
 			break;
 		case 3:
 			// filtro de animal view
 			app.image(imgs[2], 0, 0);
-
+            animalView.filter(imagenFiltradaTres.get());
 			// filtro aqui
 			app.textFont(font, 30);
 			app.text("Asi te ven ellos a ti", 200, 300);
