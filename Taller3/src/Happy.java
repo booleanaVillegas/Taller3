@@ -2,7 +2,8 @@ import processing.core.*;
 import processing.video.*;
 
 public class Happy implements Filtrable {
-	private Capture cam;
+
+	private PImage im;
 	/** este objeto recibe la camara del computador */
 	private PApplet app;
 
@@ -19,33 +20,38 @@ public class Happy implements Filtrable {
 	}
 
 	public PImage filtro(PImage cam) {
+	
+		cam.loadPixels();
 
-		cam.updatePixels();
+		app.colorMode(app.RGB);
+
+		// app.colorMode(app.HSB);
 
 		for (int i = 0; i < cam.width; i++) {
 
 			for (int j = 0; j < cam.height; j++) {
 				int pix = i + j * cam.width;
-				int h = (int) app.hue(cam.pixels[pix]);
-				int s = (int) app.saturation(cam.pixels[pix]);
-				int b = (int) app.brightness(cam.pixels[pix]);
 
-				
-				if ((app.hue(cam.pixels[pix]) > 22 && app.hue(cam.pixels[pix]) < 50)
-						&& (app.saturation(cam.pixels[pix]) > 20) && app.brightness(cam.pixels[pix]) > 30) {
-					cam.pixels[pix] = app.color(h, s, b);
+				int r = (int) app.red(cam.pixels[pix]);
+				int g = (int) app.green(cam.pixels[pix]);
+				int b = (int) app.blue(cam.pixels[pix]);
+
+				int h2 = (int) app.dist(cam.width / 2, cam.height / 2, i, j) - 400;
+
+				cam.pixels[pix] = app.color(r, g, b - h2);
+
+				if (app.blue(cam.pixels[pix]) > 10) {
+
+					cam.pixels[pix] = app.color(r, g, b);
 				}
-				h += app.dist(cam.width / 2, cam.height / 2, i, j) - 300;
-
-				cam.pixels[pix] = app.color(h, s, b);
 
 			}
 		}
-		cam.loadPixels();
+		cam.updatePixels();
 
 		/**
-		 * Con este método se hará el filtro de un ambiente feliz, planteado en
-		 * el análisis de requerimientos.
+		 * Con este método se hará el filtro de un ambiente feliz, planteado
+		 * en el análisis de requerimientos.
 		 */
 		return cam;
 	}
@@ -58,15 +64,8 @@ public class Happy implements Filtrable {
 		return false;
 	}
 
-	public Capture getCam() {
-		return cam;
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
 	public void filtro() {
-		// TODO Auto-generated method stub
 
 	}
 

@@ -75,6 +75,7 @@ public class Logica {
 			// filtro de chroma libres
 			// app.image(imgs[1], 0, 0);
 			// filtro aqui
+			
 			app.image(imageFiltradaDos.get(), 0, 0);
 			n=1;
 			break;
