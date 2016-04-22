@@ -62,12 +62,19 @@ case 0:
 	break;
 case 1:
 	//filtro de chroma libres
+	app.image(imgs[1], 0, 0);
+	//filtro aqui
 	break;
 case 2:
 	// flitro de chroma encerrados
+	app.image(imgs[2], 0, 0);
+	//filtro aqui
 	break;
 case 3:
 	// filtro de animal view
+	app.image(imgs[2], 0, 0);
+	
+	//filtro aqui
 	app.textFont(font,30);
 	app.text("Asi te ven ellos a ti", 200,300);
 	break;
@@ -84,14 +91,14 @@ case 6:
 	}
 
 	public void makey() {
-		/** este metodo tengran todas las interacciones con el makey makey */
+		/** este metodo tendra todas las interacciones con el makey makey */
 		if (app.keyCode==37 && pantallas==1){ // izquierda, SI
 			pantallas=2;
 		}
 if (app.keyCode==39 && pantallas==2){ // izquierda, No
 			pantallas=3;
 		}
-if (app.key== ' ' && pantallas!=1 && pantallas!=2){
+if (app.key== ' ' && pantallas!=1 && pantallas!=2){ // espacio. boton circular.
 	pantallas++;
 }
 if (pantallas>=6){
