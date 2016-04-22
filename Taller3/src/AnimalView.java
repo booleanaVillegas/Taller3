@@ -1,35 +1,51 @@
-import processing.core.*;
+import processing.core.PApplet;
+import processing.core.PImage;
+import processing.video.Capture;
 
-import processing.video.*;
-
-public class AnimalView implements Filtrable {
+public class AnimalView  {
 	private Capture cam;
 	/** este objeto recibe la camara del computador */
 	private PApplet app;
 
 	/** este PApplet nos permite usar metodos de la libreria de processing */
 
-	public AnimalView(PApplet app, Capture cam) {
-		this.app = app;/**
-						 * Este metodo es el contructor de la clase que me
-						 * permite cargar e inicializar todos los objetos y
-						 * variables ademas de recibir parametros del objeto
-						 */
-	}
+	public AnimalView(PApplet app) {
+		this.app = app;
 
-	public void filtro() {
 		/**
-		 * Con este método se hará el filtro del punto de vista del animal,planteado en
-		 * el análisis de requerimientos.
+		 * Este metodo es el contructor de la clase que me permite cargar e
+		 * inicializar todos los objetos y variables ademas de recibir
+		 * parametros del objeto
 		 */
 	}
 
-	public boolean validar() {
-		/**
-		 * Este booleano se usara para determinar en que momento el filtro esta
-		 * activo
-		 */
-		return false;
+	public PImage filtro(PImage cam) {
+
+		cam.updatePixels();
+
+		for (int i = 0; i < cam.width; i++) {
+
+			for (int j = 0; j < cam.height; j++) {
+				int pix = i + j * cam.width;
+				int h = (int) app.hue(cam.pixels[pix]);
+				int s = (int) app.saturation(cam.pixels[pix]);
+				int b = (int) app.brightness(cam.pixels[pix]);
+
+				
+				if (app.brightness(cam.pixels[pix]) < 50 ) {
+					cam.pixels[pix] = app.color(h, s, b);
+					b = 0;
+				}
+				
+
+				cam.pixels[pix] = app.color(h, s, b);
+
+			}
+		}
+		cam.loadPixels();
+
+		
+		return cam;
 	}
 
 }
