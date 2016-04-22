@@ -9,7 +9,7 @@ public class MainApp extends PApplet {
 	}
 
 	public void draw() {
-		app.display();
+		app.estados();
 
 	}
 
