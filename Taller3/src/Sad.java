@@ -25,7 +25,7 @@ public class Sad implements Filtrable {
 		cam.loadPixels();
 		app.colorMode(app.RGB);
 
-		// app.colorMode(app.HSB);
+	
 
 		for (int i = 0; i < cam.width; i++) {
 
@@ -54,6 +54,7 @@ public class Sad implements Filtrable {
 
 			}
 		}
+
 		cam.updatePixels();
 
 		/**

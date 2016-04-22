@@ -43,6 +43,7 @@ public class AnimalFDos {
 	  edgeImg.updatePixels();
 
 	  app.image(edgeImg, 0, 0); // Draw the new image
+	//return edgeImg;
 	
 	}
 }

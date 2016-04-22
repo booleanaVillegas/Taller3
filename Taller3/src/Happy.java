@@ -1,4 +1,4 @@
-import processing.core.*;
+ import processing.core.*;
 import processing.video.*;
 
 public class Happy implements Filtrable {
@@ -42,7 +42,7 @@ public class Happy implements Filtrable {
 
 				if (app.blue(cam.pixels[pix]) > 10) {
 
-					cam.pixels[pix] = app.color(r, g, b);
+					cam.pixels[pix] = app.color(r, g, b-20);
 				}
 
 			}

@@ -19,11 +19,12 @@ public class Logica {
 	private Happy happy;
 	private PImage imagen;
 	private PImage imagenFiltrada;
-	private PImage imageFiltradaDos, imagenFiltradaTres, imagenFiltradaCuatro;
+	private PImage imageFiltradaDos, imagenFiltradaTres, imagenFiltradaCuatro, imgFiltCinco;
 	private PFont font;
 	private AnimalView animal;
 	private Metodo fisheye;
 	private AnimalFDos animalView;
+	private Sad sad;
 
 	public Logica(PApplet app) {
 		this.app = app;
@@ -39,7 +40,7 @@ public class Logica {
 		font = app.createFont("../data/Roboto-Light.ttf", 20);
 		animal = new AnimalView(app);
 		animalView= new AnimalFDos(app);
-		
+		sad= new Sad(app);
 	
 	}
 
@@ -47,20 +48,20 @@ public class Logica {
 		/**
 		 * Este metodo incluye todas las imagenes y pantallas que se mostraran
 		 * en el PApplet
-		 */
-		if (cam.available() == true) {
+		 */  {
 			cam.read();
 		}
 		chroma.filtro();
 		imagenFiltrada = chroma.filtro(cam.get(), imgs[n]);
 		imageFiltradaDos = happy.filtro(imagenFiltrada.get());
 		imagenFiltradaTres = animal.filtro(imagenFiltrada.get());
+		imgFiltCinco= sad.filtro(imagenFiltrada.get());
 //int [] a=Metodo.fisheye(imagenFiltrada.get().pixels, 1280, 720);
 		app.fill(255);
 		app.textSize(14);
 		//imagenFiltradaCuatro.pixels=a;
 		//imagenFiltradaCuatro.updatePixels();
-		//app.image(imagenFiltradaCuatro,0,0);
+		//app.image(imag e nFiltradaCuatro,0,0);
 	}
 
 	public void estados() {
@@ -81,16 +82,16 @@ public class Logica {
 			break;
 		case 2:
 			// flitro de chroma encerrados
-			//app.image(imagenFiltradaTres, 0, 0);
-			app.image(imgs[2], 0, 0);
+			app.image(imgFiltCinco, 0, 0);
+			
 			n=2;
-			// filtro aqui
+		
 			break;
 		case 3:
 			// filtro de animal view
 			app.image(imgs[2], 0, 0);
             animalView.filter(imagenFiltradaTres.get());
-			// filtro aqui
+	// filtro aqui
 			app.textFont(font, 30);
 			app.text("Asi te ven ellos a ti", 200, 300);
 			n=2;
