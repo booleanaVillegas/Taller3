@@ -32,7 +32,7 @@ public class AnimalView  {
 				int b = (int) app.brightness(cam.pixels[pix]);
 
 				
-				if (app.brightness(cam.pixels[pix]) < 50 ) {
+				if (app.brightness(cam.pixels[pix]) < 30 ) {
 					cam.pixels[pix] = app.color(h, s, b);
 					b = 0;
 				}

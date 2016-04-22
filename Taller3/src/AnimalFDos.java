@@ -14,7 +14,7 @@ public class AnimalFDos {
 	}
 
 	public void filter(PImage img) {
-	  app.image(img, 0, 0); // Displays the image from point (0,0) 
+
 	  img.loadPixels();
 
 	  // Create an opaque image of the same size as the original
@@ -42,7 +42,7 @@ public class AnimalFDos {
 	  // State that there are changes to edgeImg.pixels[]
 	  edgeImg.updatePixels();
 
-	  app.image(edgeImg, app.width/2, 0); // Draw the new image
+	  app.image(edgeImg, 0, 0); // Draw the new image
 	
 	}
 }

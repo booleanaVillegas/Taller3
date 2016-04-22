@@ -11,7 +11,7 @@ public class Logica {
 	private Capture cam;
 	private PImage[] imgs = new PImage[6];
 	private Minim minim;
-	private int pantallas;
+	private int pantallas, n;
 	private AudioPlayer player;
 	private Movie myMovie;
 	private String[] camaras = Capture.list();
@@ -52,7 +52,7 @@ public class Logica {
 			cam.read();
 		}
 		chroma.filtro();
-		imagenFiltrada = chroma.filtro(cam.get(), imgs[1]);
+		imagenFiltrada = chroma.filtro(cam.get(), imgs[n]);
 		imageFiltradaDos = happy.filtro(imagenFiltrada.get());
 		imagenFiltradaTres = animal.filtro(imagenFiltrada.get());
 //int [] a=Metodo.fisheye(imagenFiltrada.get().pixels, 1280, 720);
@@ -76,12 +76,13 @@ public class Logica {
 			// app.image(imgs[1], 0, 0);
 			// filtro aqui
 			app.image(imageFiltradaDos.get(), 0, 0);
-			
+			n=1;
 			break;
 		case 2:
 			// flitro de chroma encerrados
 			//app.image(imagenFiltradaTres, 0, 0);
 			app.image(imgs[2], 0, 0);
+			n=2;
 			// filtro aqui
 			break;
 		case 3:
@@ -91,6 +92,7 @@ public class Logica {
 			// filtro aqui
 			app.textFont(font, 30);
 			app.text("Asi te ven ellos a ti", 200, 300);
+			n=2;
 			break;
 		case 4:
 			app.image(imgs[3], 0, 0);
