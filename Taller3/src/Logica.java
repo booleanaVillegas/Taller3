@@ -5,7 +5,7 @@ import processing.core.PFont;
 import processing.core.PImage;
 import processing.video.Capture;
 import processing.video.Movie;
-
+// 0 jjag, 1 jmacaw, 2 jtuqui, 3 jsnake, 4 jaguar, 5 macaw, 6 tuqui, 7 snake
 public class Logica {
 	private PApplet app;
 	private Capture cam;
@@ -13,7 +13,7 @@ public class Logica {
 	private Minim minim;
 	private int pantallas, n;
 	private AudioPlayer player;
-	private Movie myMovie;
+	private Movie [] myMovie;
 	private String[] camaras = Capture.list();
 	private Chroma chroma;
 	private Happy happy;
@@ -21,9 +21,10 @@ public class Logica {
 	private PImage imagenFiltrada;
 	private PImage imageFiltradaDos, imagenFiltradaTres, imagenFiltradaCuatro, imgFiltCinco;
 	private PFont font;
+	
 	private AnimalView animal;
 	private Metodo fisheye;
-	private AnimalFDos animalView;
+
 	private Sad sad;
 
 	public Logica(PApplet app) {
@@ -32,39 +33,38 @@ public class Logica {
 		cam.start();
 		imagen = app.loadImage("../data/dbfa1978.jpg");
 		chroma = new Chroma(app);
-		//imagenFiltradaCuatro= app.createImage(1280,720, app.RGB);
+
 		for (int i = 0; i < 6; i++) {
 			imgs[i] = app.loadImage("../data/img-0" + i + ".png");
 		}
 		happy = new Happy(app);
 		font = app.createFont("../data/Roboto-Light.ttf", 20);
 		animal = new AnimalView(app);
-		animalView= new AnimalFDos(app);
-		sad= new Sad(app);
-	
+
+		sad = new Sad(app);
+
 	}
 
 	public void display() {
 		/**
 		 * Este metodo incluye todas las imagenes y pantallas que se mostraran
 		 * en el PApplet
-		 */  {
+		 */
+		{
 			cam.read();
 		}
 		chroma.filtro();
 		imagenFiltrada = chroma.filtro(cam.get(), imgs[n]);
-		imageFiltradaDos = happy.filtro(imagenFiltrada.get());
-		imagenFiltradaTres = animal.filtro(imagenFiltrada.get());
-		imgFiltCinco= sad.filtro(imagenFiltrada.get());
-//int [] a=Metodo.fisheye(imagenFiltrada.get().pixels, 1280, 720);
+		
+		
+
 		app.fill(255);
 		app.textSize(14);
-		//imagenFiltradaCuatro.pixels=a;
-		//imagenFiltradaCuatro.updatePixels();
-		//app.image(imag e nFiltradaCuatro,0,0);
+
 	}
 
 	public void estados() {
+		System.out.println(app.frameCount);
 		display();
 		app.imageMode(app.CORNER);
 		switch (pantallas) {
@@ -76,25 +76,30 @@ public class Logica {
 			// filtro de chroma libres
 			// app.image(imgs[1], 0, 0);
 			// filtro aqui
-			
+			imageFiltradaDos = happy.filtro(imagenFiltrada.get());
+
 			app.image(imageFiltradaDos.get(), 0, 0);
-			n=1;
+			n = 1;
 			break;
 		case 2:
+			imgFiltCinco = sad.filtro(imagenFiltrada.get());
 			// flitro de chroma encerrados
 			app.image(imgFiltCinco, 0, 0);
-			
-			n=2;
-		
+
+			n = 2;
+
 			break;
 		case 3:
 			// filtro de animal view
+			imagenFiltradaTres = animal.filtro(imagenFiltrada.get());
 			app.image(imgs[2], 0, 0);
-            animalView.filter(imagenFiltradaTres.get());
-	// filtro aqui
+
+			animal.filtro(imagenFiltrada.get());
+
+			// filtro aqui
 			app.textFont(font, 30);
 			app.text("Asi te ven ellos a ti", 200, 300);
-			n=2;
+			n = 2;
 			break;
 		case 4:
 			app.image(imgs[3], 0, 0);

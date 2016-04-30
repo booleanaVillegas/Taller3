@@ -1,11 +1,14 @@
 import processing.core.PApplet;
 import processing.core.PImage;
+import processing.core.PVector;
 import processing.video.Capture;
 
-public class AnimalView  {
+public class AnimalView {
 	private Capture cam;
 	/** este objeto recibe la camara del computador */
 	private PApplet app;
+	float v = (float) (1 / 9.0);
+	float[][] kernel = { { v, v, v }, { v, v, v }, { v, v, v } };
 
 	/** este PApplet nos permite usar metodos de la libreria de processing */
 
@@ -21,31 +24,48 @@ public class AnimalView  {
 
 	public PImage filtro(PImage cam) {
 
-		cam.updatePixels();
+		cam.loadPixels();
+		app.colorMode(app.RGB);
+		// Create an opaque image of the same size as the original
+		PImage edgeImg = app.createImage(cam.width, cam.height, app.RGB);
+		PImage edgeImg2 = app.createImage(cam.width, cam.height, app.RGB);
+		// Loop through every pixel in the image
+		for (int y = 0; y < cam.height; y++) { // Skip top and bottom edges
+			for (int x = 0; x < cam.width; x++) { // Skip left and right
+				int pos = x + y * cam.width; // edges
 
-		for (int i = 0; i < cam.width; i++) {
+				float g = app.green(cam.pixels[pos]);
+				float r = app.red(cam.pixels[pos]);
+				float b = app.blue(cam.pixels[pos]);
+				float h = app.hue(cam.pixels[pos]);
+				float s = app.saturation(cam.pixels[pos]);
+				float bri = app.brightness(cam.pixels[pos]);
+				edgeImg.pixels[pos] = app.color(r, 0, 0,50);
+				cam.pixels[pos] = app.color(0, 0, b, 50);
+				if (b < 20) {
+					edgeImg2.pixels[pos] = app.color(0, 0, 0);
+				} else {
 
-			for (int j = 0; j < cam.height; j++) {
-				int pix = i + j * cam.width;
-				int h = (int) app.hue(cam.pixels[pix]);
-				int s = (int) app.saturation(cam.pixels[pix]);
-				int b = (int) app.brightness(cam.pixels[pix]);
-
-				
-				if (app.brightness(cam.pixels[pix]) < 30 ) {
-					cam.pixels[pix] = app.color(h, s, b);
-					b = 0;
+					edgeImg2.pixels[pos] = app.color(r,g,b);
 				}
-				
-
-				cam.pixels[pix] = app.color(h, s, b);
 
 			}
 		}
-		cam.loadPixels();
+		// State that there are changes to edgeImg.pixels[]
 
-		
-		return cam;
+		edgeImg.updatePixels();
+		PVector vector;
+		vector = new PVector(1, 1);
+
+		float scaleFactor = (float) 1;
+		app.image(edgeImg2, 0, 0, edgeImg.width * scaleFactor, edgeImg.height * scaleFactor);
+		app.blendMode(app.MULTIPLY);
+		app.image(edgeImg, -10, 0, edgeImg.width * scaleFactor, edgeImg.height * scaleFactor);
+		app.image(cam, 10, 0, cam.width * scaleFactor, cam.height * scaleFactor);
+		// Draw the new image
+		// return edgeImg;
+
+		return edgeImg;
 	}
 
 }

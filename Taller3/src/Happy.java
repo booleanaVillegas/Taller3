@@ -25,7 +25,6 @@ public class Happy implements Filtrable {
 
 		app.colorMode(app.RGB);
 
-		// app.colorMode(app.HSB);
 
 		for (int i = 0; i < cam.width; i++) {
 
