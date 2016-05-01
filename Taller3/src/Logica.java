@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
 import processing.core.PApplet;
@@ -5,6 +7,7 @@ import processing.core.PFont;
 import processing.core.PImage;
 import processing.video.Capture;
 import processing.video.Movie;
+
 // 0 jjag, 1 jmacaw, 2 jtuqui, 3 jsnake, 4 jaguar, 5 macaw, 6 tuqui, 7 snake
 public class Logica {
 	private PApplet app;
@@ -13,17 +16,16 @@ public class Logica {
 	private Minim minim;
 	private int pantallas, n;
 	private AudioPlayer player;
-	private Movie [] myMovie;
+	private Movie[] myMovie = new Movie[9];
 	private String[] camaras = Capture.list();
 	private Chroma chroma;
 	private Happy happy;
-	private PImage imagen;
 	private PImage imagenFiltrada;
 	private PImage imageFiltradaDos, imagenFiltradaTres, imagenFiltradaCuatro, imgFiltCinco;
 	private PFont font;
-	
+
 	private AnimalView animal;
-	private Metodo fisheye;
+	private Video video;
 
 	private Sad sad;
 
@@ -31,12 +33,16 @@ public class Logica {
 		this.app = app;
 		cam = new Capture(app, camaras[0]);
 		cam.start();
-		imagen = app.loadImage("../data/dbfa1978.jpg");
-		chroma = new Chroma(app);
 
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < imgs.length; i++) {
 			imgs[i] = app.loadImage("../data/img-0" + i + ".png");
 		}
+		for (int i = 0; i < 9; i++) {
+			myMovie[i] = new Movie(app, "../data/" + i + ".mpeg");
+			myMovie[i].loop();
+		}
+		chroma = new Chroma(app, cam);
+
 		happy = new Happy(app);
 		font = app.createFont("../data/Roboto-Light.ttf", 20);
 		animal = new AnimalView(app);
@@ -54,30 +60,27 @@ public class Logica {
 			cam.read();
 		}
 		chroma.filtro();
-		imagenFiltrada = chroma.filtro(cam.get(), imgs[n]);
-		
-		
-
+		imagenFiltrada = chroma.filtro(cam.get(), myMovie[1]);
 		app.fill(255);
 		app.textSize(14);
 
 	}
 
 	public void estados() {
+
 		System.out.println(app.frameCount);
 		display();
 		app.imageMode(app.CORNER);
 		switch (pantallas) {
 		case 0:
 			// inicio
+			app.image(imgs[1], 0, 0);
 			app.image(imgs[0], 0, 0);
+			app.image(myMovie[1], 0, 0);
 			break;
 		case 1:
-			// filtro de chroma libres
-			// app.image(imgs[1], 0, 0);
 			// filtro aqui
 			imageFiltradaDos = happy.filtro(imagenFiltrada.get());
-
 			app.image(imageFiltradaDos.get(), 0, 0);
 			n = 1;
 			break;
