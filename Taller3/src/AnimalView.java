@@ -59,7 +59,7 @@ public class AnimalView {
 
 		float scaleFactor = (float) 1;
 		app.image(edgeImg2, 0, 0, edgeImg.width * scaleFactor, edgeImg.height * scaleFactor);
-		app.blendMode(app.MULTIPLY);
+		
 		app.image(edgeImg, -10, 0, edgeImg.width * scaleFactor, edgeImg.height * scaleFactor);
 		app.image(cam, 10, 0, cam.width * scaleFactor, cam.height * scaleFactor);
 		// Draw the new image

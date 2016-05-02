@@ -1,4 +1,4 @@
- import processing.core.*;
+import processing.core.*;
 import processing.video.*;
 
 public class Happy implements Filtrable {
@@ -6,6 +6,7 @@ public class Happy implements Filtrable {
 	private PImage im;
 	/** este objeto recibe la camara del computador */
 	private PApplet app;
+	private int camW, camH;
 
 	/** este PApplet nos permite usar metodos de la libreria de processing */
 
@@ -19,12 +20,31 @@ public class Happy implements Filtrable {
 		 */
 	}
 
+	public void filtro() {
+		PImage imagenNueva = app.createImage(1280, 720, app.RGB);
+		imagenNueva.loadPixels();
+		for (int i = 0; i < imagenNueva.width; i++) {
+
+			for (int j = 0; j < imagenNueva.height; j++) {
+				int pix = i + j * imagenNueva.width;
+
+				int h2 = (int) app.dist(imagenNueva.width / 2, imagenNueva.height / 2, i, j) - 400;
+
+				imagenNueva.pixels[pix] = app.color(0, 0, 25, h2);
+
+			}
+		}
+		imagenNueva.updatePixels();
+
+		app.image(imagenNueva, 0, 0);
+	}
+
 	public PImage filtro(PImage cam) {
-	
+		camW = cam.width;
+		camH = cam.height;
 		cam.loadPixels();
 
 		app.colorMode(app.RGB);
-
 
 		for (int i = 0; i < cam.width; i++) {
 
@@ -41,17 +61,19 @@ public class Happy implements Filtrable {
 
 				if (app.blue(cam.pixels[pix]) > 10) {
 
-					cam.pixels[pix] = app.color(r, g, b-20);
+					cam.pixels[pix] = app.color(r, g, b - 20);
+
+					cam.updatePixels();
+
+					/**
+					 * Con este método se hará el filtro de un ambiente feliz,
+					 * planteado en el análisis de requerimientos.
+					 */
+
 				}
-
 			}
-		}
-		cam.updatePixels();
 
-		/**
-		 * Con este método se hará el filtro de un ambiente feliz, planteado
-		 * en el análisis de requerimientos.
-		 */
+		}
 		return cam;
 	}
 
@@ -61,11 +83,6 @@ public class Happy implements Filtrable {
 		 * activo
 		 */
 		return false;
-	}
-
-	@Override
-	public void filtro() {
-
 	}
 
 }

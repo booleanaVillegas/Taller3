@@ -9,12 +9,13 @@ public class MainApp extends PApplet {
 	}
 
 	public void draw() {
+		background(255);
 		app.estados();
 
 	}
 
 	public void keyPressed() {
-		app.makey();
+		app.wii();
 
 	}
 }
