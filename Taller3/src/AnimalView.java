@@ -41,13 +41,16 @@ public class AnimalView {
 				float s = app.saturation(cam.pixels[pos]);
 				float bri = app.brightness(cam.pixels[pos]);
 				app.colorMode(app.HSB);
-				edgeImg.pixels[pos] = app.color(h,s-30,bri);
+				edgeImg.pixels[pos] = app.color(h,0,bri);
+				cam.pixels[pos] = app.color(0, 30, b, 20);
+				 if (b > 50) {
 				app.colorMode(app.RGB);
-				cam.pixels[pos] = app.color(0, 0, b,50);
-				if (b < 15) {
-					cam.pixels[pos] = app.color(0, 0, 0);
+				cam.pixels[pos] = app.color(0, 0, b-15,20);
+				 }
+				if (b < 10) {
+					cam.pixels[pos] = app.color(0, 0, 0, 30);
 				} if (b > 15) {
-					edgeImg2.pixels[pos] = app.color(r,0,0,50);
+					edgeImg2.pixels[pos] = app.color(r+10,g-30,b-30,70);
 				}
 				
 				
@@ -59,12 +62,14 @@ public class AnimalView {
 		PVector vector;
 		vector = new PVector( app.random(-15+app.width/2, 15), app.random(-15+app.width/2, 15));
 
-		float scaleFactor = app.random((float ) 1, (float ) 1.3);
+		float scaleFactor = app.random((float ) 1, (float ) 1.05);
+		float scaleFactorUno = app.random((float ) 1, (float ) 1.05);
+		float scaleFactorDos = app.random((float ) 1, (float ) 1.05);
 		app.imageMode(app.CENTER);
 		
 		app.image(edgeImg,  -15+app.width/2,  -15+app.height/2, edgeImg.width * scaleFactor, edgeImg.height * scaleFactor);
-		app.image(cam, -15+app.width/2,  -15+app.height/2, cam.width * scaleFactor, cam.height * scaleFactor);
-		app.image(edgeImg2, 1*vector.x, 1*vector.y , edgeImg.width * scaleFactor, edgeImg.height * scaleFactor);
+		app.image(cam, -15+app.width/2,  -15+app.height/2, cam.width * scaleFactorUno, cam.height * scaleFactorUno);
+		app.image(edgeImg2, -15+app.width/2,  -15+app.height/2 , edgeImg.width * scaleFactorDos, edgeImg.height * scaleFactorDos);
 		// Draw the new image
 		// return edgeImg;
 		app.imageMode(app.CORNER);

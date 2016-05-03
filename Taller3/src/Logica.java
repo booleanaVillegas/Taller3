@@ -144,8 +144,10 @@ public class Logica {
 			// filtro de animal view
 			imgFiltrCuatro = animal.filtro(imagenFiltrada.get());
 	
-			app.image(imgs[8], app.random(190 , 220), app.random(550 , 530));
-			n = (int) app.random(0, 3);
+			app.image(imgs[8], app.random(190 , 220), app.random(550 , 580));
+			if(app.frameCount%8==0){
+			n = (int) app.random(0, 4);
+			}
 			boton[0].pintar(1150, 600);
 			break;
 		case 4:
