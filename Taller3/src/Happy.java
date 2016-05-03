@@ -30,7 +30,7 @@ public class Happy implements Filtrable {
 
 				int h2 = (int) app.dist(imagenNueva.width / 2, imagenNueva.height / 2, i, j) - 600;
 
-				imagenNueva.pixels[pix] = app.color(255,255, 15, h2);
+				imagenNueva.pixels[pix] = app.color(255, 255, 15, h2);
 
 			}
 		}
@@ -54,16 +54,18 @@ public class Happy implements Filtrable {
 				int r = (int) app.red(cam.pixels[pix]);
 				int g = (int) app.green(cam.pixels[pix]);
 				int b = (int) app.blue(cam.pixels[pix]);
+				float h = app.hue(cam.pixels[pix]);
+				float s = app.saturation(cam.pixels[pix]);
+				float br = app.brightness(cam.pixels[pix]);
+				app.colorMode(app.HSB);
+				cam.pixels[pix] = app.color(h, s + 10, br+10);
 
-				int h2 = (int) app.dist(cam.width / 2, cam.height / 2, i, j) - 400;
+				app.colorMode(app.RGB);
+				cam.pixels[pix] = app.color(r, g, b - 20);
 
-				cam.pixels[pix] = app.color(r, g, b - h2);
+				if (app.saturation(cam.pixels[pix]) > 10) {
 
-				if (app.blue(cam.pixels[pix]) > 10) {
-
-					cam.pixels[pix] = app.color(r+15, g+15, b - 20);
-
-					
+					cam.pixels[pix] = app.color(r + 15, g + 15, b - 20);
 
 					/**
 					 * Con este método se hará el filtro de un ambiente feliz,
@@ -71,24 +73,19 @@ public class Happy implements Filtrable {
 					 */
 
 				}
-				//app.colorMode(app.HSB);
-				int h = (int) app.hue(cam.pixels[pix]);
-				int s = (int) app.saturation(cam.pixels[pix]);
-				int br = (int) app.brightness(cam.pixels[pix]);
-				if (br<20){
-					cam.pixels[pix]= app.color(0,0,0);
-				}
-				if (br>120){
-					cam.pixels[pix]= app.color(255,255,60);
-				}
-				
-				cam.updatePixels();
-				
-				
-			}
+				// app.colorMode(app.HSB);
 
+				if (br < 20) {
+					cam.pixels[pix] = app.color(r, g, b - 20);
+				}
+				if (br > 120) {
+					cam.pixels[pix] = app.color(255, 255, 60);
+				}
+
+			}
+			cam.updatePixels();
 		}
-		
+
 		return cam;
 	}
 

@@ -13,7 +13,7 @@ import processing.video.Video;
 public class Logica {
 	private PApplet app;
 	private Capture cam;
-	private PImage[] imgs = new PImage[9];
+	private PImage[] imgs = new PImage[10];
 	private Minim minim;
 	private int pantallas, n;
 	private AudioPlayer player;
@@ -37,7 +37,7 @@ public class Logica {
 		cam = new Capture(app, camaras[0]);
 		cam.start();
 
-		for (int i = 1; i <= 9; i++) {
+		for (int i = 1; i <= 10; i++) {
 			imgs[i - 1] = app.loadImage("../data/img-0" + i + ".png");
 		}
 		for (int i = 1; i <= 5; i++) {
@@ -69,6 +69,7 @@ public class Logica {
 		imagenFiltrada = chroma.filtro(cam.get(), myMovie[n]);
 		app.fill(255);
 		app.textSize(14);
+app.cursor(imgs[9]);
 
 	}
 
@@ -84,7 +85,9 @@ public class Logica {
 			break;
 		case 1:
 			happy = new Happy(app);
+	
 			imageFiltradaDos = happy.filtro(imagenFiltrada.get());
+			
 			app.image(imageFiltradaDos.get(), 0, 0);
 			happy.filtro();
 			boton[1].pintar(400, 350);
@@ -113,31 +116,31 @@ public class Logica {
 				undido = 4;
 			}
 
-			app.image(imgFiltrTres, 0, 0);
+			app.image(imgFiltrTres, 0,0);
 
-			switch (undido) {
+			/*switch (undido) {
 			case 1:
 				// macaw
-				System.out.println("awak");
+				
 				n = 0;
 				break;
 			case 2:
 				// serpiente
-				System.out.println("serpiente");
+			
 				n = 1;
 				break;
 			case 3:
 				// tuqui
-				System.out.println("tuqui");
+			
 				n = 2;
 				break;
 			case 4:
 				// leopardo
-				System.out.println("leopardo");
+	
 				n = 3;
 				break;
 				
-			}
+			}*/
 			boton[3].pintar(400, 350);
 			break;
 		case 3:
@@ -182,6 +185,31 @@ public class Logica {
 			pantallas = 1;
 		} else if (pantallas >= 6) {
 			pantallas = 6;
+		}
+		if (pantallas==2){
+			switch (undido) {
+			case 1:
+				// macaw
+				
+				n = 0;
+				break;
+			case 2:
+				// serpiente
+			
+				n = 1;
+				break;
+			case 3:
+				// tuqui
+			
+				n = 2;
+				break;
+			case 4:
+				// leopardo
+	
+				n = 3;
+				break;
+				
+			}
 		}
 	}
 }

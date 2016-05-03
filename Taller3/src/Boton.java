@@ -19,7 +19,7 @@ public class Boton {
 		}
 		app.colorMode(app.RGB, 255);
 		app.tint(255, opacity);
-		System.out.println(opacity);
+		
 		app.image(imagen, posX, posY, imagen.width/2, imagen.height/2);
 
 		app.noTint();
