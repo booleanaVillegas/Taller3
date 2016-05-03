@@ -8,7 +8,7 @@ public class Chroma implements Filtrable {
 	private PApplet app;
 	private Capture cam;
 
-	public Chroma(PApplet app, Capture cam) {
+	public Chroma(PApplet app) {
 		this.app = app;
 		this.cam = cam;
 
@@ -47,11 +47,11 @@ public class Chroma implements Filtrable {
 		cam.updatePixels();
 		video.updatePixels();
 
-		if (app.mousePressed) {
+		/*if (app.mousePressed) {
 			System.out.println("h" + h);
 			System.out.println("s" + s);
 			System.out.println("b" + b);
-		}
+		}*/
 
 		app.fill(h, s, b);
 		app.colorMode(app.HSB, 100);

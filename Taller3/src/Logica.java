@@ -13,7 +13,7 @@ import processing.video.Video;
 public class Logica {
 	private PApplet app;
 	private Capture cam;
-	private PImage[] imgs = new PImage[7];
+	private PImage[] imgs = new PImage[9];
 	private Minim minim;
 	private int pantallas, n;
 	private AudioPlayer player;
@@ -22,10 +22,10 @@ public class Logica {
 	private Chroma chroma;
 	private Happy happy;
 	private PImage imagenFiltrada;
-	private PImage imageFiltradaDos, imagenFiltradaTres, imagenFiltradaCuatro, imgFiltCinco;
+	private PImage imageFiltradaDos, imgFiltrTres, imgFiltrCuatro;
 	private PFont font;
 	private int undido;
-	private Boton[] boton = new Boton[3];
+	private Boton[] boton = new Boton[4];
 
 	private AnimalView animal;
 	private Video video;
@@ -37,23 +37,23 @@ public class Logica {
 		cam = new Capture(app, camaras[0]);
 		cam.start();
 
-		for (int i = 1; i < imgs.length + 1; i++) {
+		for (int i = 1; i <= 9; i++) {
 			imgs[i - 1] = app.loadImage("../data/img-0" + i + ".png");
 		}
-		for (int i = 1; i < 6; i++) {
-			myMovie[i - 1] = new Movie(app, "../data/" + i + ".mov");
+		for (int i = 1; i <= 5; i++) {
+			myMovie[i - 1] = new Movie(app, "../data/"+i+".mov");
 			myMovie[i - 1].loop();
 		}
 
-		boton[0] = new Boton(app, imgs[6].get() );
+		boton[0] = new Boton(app, imgs[6].get());
+		boton[1] = new Boton(app, imgs[4].get());
+		boton[2] = new Boton(app, imgs[5].get());
+		boton[3] = new Boton(app, imgs[7].get());
+		animal = new AnimalView(app);
+		chroma = new Chroma(app);
+		sad = new Sad(app);
 
-		chroma = new Chroma(app, cam);
-
-		
 		font = app.createFont("../data/Roboto-Light.ttf", 20);
-		
-
-		
 
 	}
 
@@ -65,7 +65,7 @@ public class Logica {
 		{
 			cam.read();
 		}
-		chroma.filtro();
+	
 		imagenFiltrada = chroma.filtro(cam.get(), myMovie[n]);
 		app.fill(255);
 		app.textSize(14);
@@ -87,32 +87,34 @@ public class Logica {
 			imageFiltradaDos = happy.filtro(imagenFiltrada.get());
 			app.image(imageFiltradaDos.get(), 0, 0);
 			happy.filtro();
+			boton[1].pintar(400, 350);
 			n = 4;
 			break;
 		case 2:
-			imgFiltCinco = sad.filtro(imagenFiltrada.get());
+
+			imgFiltrTres = sad.filtro(imagenFiltrada.get());
 			// flitro de chroma encerrados
-			
+
 			if (app.mouseX > 0 && app.mouseY > 0 && app.mouseX < app.width / 2 && app.mouseY < app.height / 2) {
 				undido = 3;
 			}
-			
+
 			if (app.mouseX > app.width / 2 && app.mouseY > app.height / 2 && app.mouseX < app.width
 					&& app.mouseY < app.height) {
 				undido = 1;
 			}
-			
+
 			if (app.mouseX > app.width / 2 && app.mouseY > 0 && app.mouseX < app.width && app.mouseY < app.height / 2) {
 				undido = 2;
 			}
-			
-			if (app.mouseX > 0 && app.mouseY > app.height / 2 && app.mouseX < app.width/2
+
+			if (app.mouseX > 0 && app.mouseY > app.height / 2 && app.mouseX < app.width / 2
 					&& app.mouseY < app.height) {
 				undido = 4;
 			}
-			
-			app.image(imgFiltCinco, 0, 0);
-			
+
+			app.image(imgFiltrTres, 0, 0);
+
 			switch (undido) {
 			case 1:
 				// macaw
@@ -134,30 +136,29 @@ public class Logica {
 				System.out.println("leopardo");
 				n = 3;
 				break;
-
+				
 			}
-			n = 1;
-
+			boton[3].pintar(400, 350);
 			break;
 		case 3:
 			// filtro de animal view
-			imagenFiltradaTres = animal.filtro(imagenFiltrada.get());
-			app.image(myMovie[n], 0, 0);
-
-			animal.filtro(imagenFiltrada.get());
-			animal = new AnimalView(app);
-			app.textFont(font, 30);
-			app.text("Asi te ven ellos a ti", 200, 300);
-			n = 2;
+			imgFiltrCuatro = animal.filtro(imagenFiltrada.get());
+	
+			app.image(imgs[8], app.random(190 , 220), app.random(550 , 530));
+			n = (int) app.random(0, 3);
+			boton[0].pintar(1150, 600);
 			break;
 		case 4:
-			app.image(imgs[3], 0, 0);
+			app.image(imgs[1], 0, 0);
+			boton[0].pintar(1150, 600);
 			break;
 		case 5:
-			app.image(imgs[4], 0, 0);
+			app.image(imgs[2], 0, 0);
+			boton[0].pintar(1150, 600);
 			break;
 		case 6:
-			app.image(imgs[5], 0, 0);
+			app.image(imgs[3], 0, 0);
+			boton[2].pintar(850, 600);
 			break;
 		}
 	}
@@ -170,12 +171,14 @@ public class Logica {
 		if (app.keyCode == 39 && pantallas == 2) { // derecha, No
 			pantallas = 3;
 		}
-		if (app.key == ' ' ) { // espacio.
+		if (app.key == ' ' && pantallas != 1 && pantallas != 2) { // espacio.
 																	// boton
 																	// circular.
 			pantallas++;
 		}
-		if (pantallas >= 6) {
+		if (pantallas >= 6 && app.keyCode == app.ENTER) {
+			pantallas = 1;
+		} else if (pantallas >= 6) {
 			pantallas = 6;
 		}
 	}

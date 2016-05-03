@@ -28,9 +28,9 @@ public class Happy implements Filtrable {
 			for (int j = 0; j < imagenNueva.height; j++) {
 				int pix = i + j * imagenNueva.width;
 
-				int h2 = (int) app.dist(imagenNueva.width / 2, imagenNueva.height / 2, i, j) - 400;
+				int h2 = (int) app.dist(imagenNueva.width / 2, imagenNueva.height / 2, i, j) - 600;
 
-				imagenNueva.pixels[pix] = app.color(0, 0, 25, h2);
+				imagenNueva.pixels[pix] = app.color(255,255, 15, h2);
 
 			}
 		}
@@ -61,9 +61,9 @@ public class Happy implements Filtrable {
 
 				if (app.blue(cam.pixels[pix]) > 10) {
 
-					cam.pixels[pix] = app.color(r, g, b - 20);
+					cam.pixels[pix] = app.color(r+15, g+15, b - 20);
 
-					cam.updatePixels();
+					
 
 					/**
 					 * Con este método se hará el filtro de un ambiente feliz,
@@ -71,9 +71,24 @@ public class Happy implements Filtrable {
 					 */
 
 				}
+				//app.colorMode(app.HSB);
+				int h = (int) app.hue(cam.pixels[pix]);
+				int s = (int) app.saturation(cam.pixels[pix]);
+				int br = (int) app.brightness(cam.pixels[pix]);
+				if (br<20){
+					cam.pixels[pix]= app.color(0,0,0);
+				}
+				if (br>120){
+					cam.pixels[pix]= app.color(255,255,60);
+				}
+				
+				cam.updatePixels();
+				
+				
 			}
 
 		}
+		
 		return cam;
 	}
 

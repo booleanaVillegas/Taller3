@@ -43,7 +43,7 @@ public class Sad implements Filtrable {
 
 				int h2 = (int) app.dist(cam.width / 2, cam.height / 2, i, j) - 400;
 				app.colorMode(app.HSB);
-				cam.pixels[pix] = app.color(h, s, b - 80);
+				cam.pixels[pix] = app.color(h, s-80, b - 80);
 				app.colorMode(app.RGB);
 				cam.pixels[pix] = app.color(r, g, b + h2);
 
@@ -51,7 +51,12 @@ public class Sad implements Filtrable {
 
 					cam.pixels[pix] = app.color(r, g, b + 10);
 				}
-
+				if (br<40){
+					cam.pixels[pix] = app.color(0,0,0);
+				
+				}
+				app.colorMode(app.HSB);
+				cam.pixels[pix] = app.color(h, s-20, b-15);
 			}
 		}
 
